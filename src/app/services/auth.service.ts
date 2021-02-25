@@ -4,18 +4,17 @@ import { HttpClient } from '@angular/common/http';
 import { GenericService } from './generic.service';
 import { LoginRequest } from '../models/login.request';
 import { map } from 'rxjs/operators';
-import { AuthResponse } from '../models/auth.response';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthService extends GenericService {
-    baseUrl = environment.apiUrl + "/token";
-    private currentUserSubject: BehaviorSubject<AuthResponse>;
+    baseUrl = environment.apiUrl + "/user";
+    private currentUserSubject: BehaviorSubject<string>;
     public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    constructor(public http: HttpClient){
+    constructor(http: HttpClient){
         super(http);
-        this.currentUserSubject = new BehaviorSubject<AuthResponse>(JSON.parse(localStorage.getItem('currentUser') || '{}'));
+        this.currentUserSubject = new BehaviorSubject<string>(localStorage.getItem('currentUser') || '');
     }
 
     get isLoggedIn() {
@@ -26,8 +25,8 @@ export class AuthService extends GenericService {
         return this.currentUserSubject.value;
     }
 
-    public loginUser(passwordTokenRequest: LoginRequest): Observable<any>{
-        return this.post(passwordTokenRequest, '/login').pipe(map(response => {
+    public loginUser(loginRequest: LoginRequest): Observable<any>{
+        return this.post(loginRequest, '/login').pipe(map(response => {
             this.setUserCache(response.responseObject);
             return response;
         }));
@@ -43,8 +42,8 @@ export class AuthService extends GenericService {
     //     return this.post(passwordTokenRequest, '/register');
     // }
 
-    private setUserCache(user: AuthResponse){
-        localStorage.setItem('currentUser', JSON.stringify(user));
+    private setUserCache(user: string){
+        localStorage.setItem('currentUser', user);
         this.loggedIn.next(true);
         this.currentUserSubject.next(user);
     }
