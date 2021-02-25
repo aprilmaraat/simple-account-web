@@ -38,13 +38,21 @@ export class AuthService extends GenericService {
         this.currentUserSubject.next(JSON.parse('{}'));
     }
 
-    // public registerUser(passwordTokenRequest: LoginRequest): Observable<any>{
-    //     return this.post(passwordTokenRequest, '/register');
-    // }
+    public registerUser(loginRequest: LoginRequest): Observable<any>{
+        return this.post(loginRequest, '');
+    }
+
+    public deleteUser(id: number): Observable<any>{
+        return this.delete(id, '');
+    }
 
     private setUserCache(user: string){
         localStorage.setItem('currentUser', user);
         this.loggedIn.next(true);
         this.currentUserSubject.next(user);
+    }
+
+    public userList(): Observable<any>{
+        return this.http.get<any>(this.baseUrl + '/user-list', { headers: this.headers });
     }
 }

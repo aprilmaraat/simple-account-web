@@ -1,1 +1,34 @@
-<p>user works!</p>
+<div class="example-button-row">
+    <button (click)="logout();" mat-stroked-button>Logout</button>
+</div>
+
+<table *ngIf="users" class="table">
+    <thead>
+      <tr class="col">
+        <th scope="col">Id</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="row-data" *ngFor="let item of users">
+        <th scope="row">{{ item.id }}</th>
+        <td scope="row">{{ item.firstName }}</td>
+        <td scope="row">{{ item.lastName }}</td>
+        <td scope="row">{{ item.email }}</td>
+        <td scope="row">{{ item.password }}</td>
+        <td scope="row">
+            <button mat-stroked-button color="primary">Edit</button>
+        </td>
+        <td scope="row">
+            <button *ngIf="item.id != 1" (click)="delete(item.id);" mat-stroked-button color="warn">Delete</button>
+        </td>
+      </tr>
+
+      <tr *ngIf="!users">No data found!</tr>
+    </tbody>
+</table>

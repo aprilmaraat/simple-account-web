@@ -1,1 +1,48 @@
-<p>register works!</p>
+<form (ngSubmit)="save();" class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>First Name</mat-label>
+      <input [(ngModel)]="user.firstName" type="text" matInput [formControl]="firstName">
+      <mat-error *ngIf="firstName.hasError('required')">
+        First name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <br/>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Last Name</mat-label>
+        <input [(ngModel)]="user.lastName" type="text" matInput [formControl]="lastName">
+        <mat-error *ngIf="lastName.hasError('required')">
+            Last name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+  
+    <br/>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Email</mat-label>
+      <input [(ngModel)]="user.email" type="email" matInput [formControl]="email" placeholder="Ex. pat@example.com">
+      <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="email.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <br/>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Password</mat-label>
+      <input [(ngModel)]="user.password" type="password" matInput [formControl]="password">
+      <mat-error *ngIf="password.hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    
+    <div class="example-button-row">
+      <button type="submit" mat-raised-button color="primary">Save</button>
+      <button (click)="loginPage();" mat-button color="warn">Cancel</button>
+    </div>
+</form>
+  
