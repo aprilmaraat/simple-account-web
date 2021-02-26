@@ -7,6 +7,7 @@ import { AuthGuard } from './custom-modules/auth.guard';
 
 const routes: Routes = [
   { path: '', component: UserComponent, canActivate: [AuthGuard] },
+  { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
 ];
